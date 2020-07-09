@@ -127,8 +127,7 @@ Game.prototype = {
         localStorage.totalscore = this.score;
         this.game.physics.arcade.overlap(this.playerBullets,this.enemies,this.damageEnemy,null,this);
         this.game.physics.arcade.collide(this.player,this.enemies,this.reduceLife,null,this);
-
-        // console.log(localStorage.totalscore);
+        
         this.textLife.setText("Vidas: " +this.life);
         this.textScore.setText("Puntaje: " +this.score);
         this.textWave.setText("Wave: " +this.wave_current);

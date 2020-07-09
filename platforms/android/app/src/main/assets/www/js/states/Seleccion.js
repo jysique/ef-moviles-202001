@@ -14,6 +14,9 @@ Seleccion.prototype = {
         this.text2.inputEnabled = true;
         this.text2.events.onInputDown.add(this.goParaoSinPoloGame,this);
 
+        this.text3 = this.game.add.text(250,400,'Con q cambias de direccion de disparo',{ fontSize: '20px', fill: '#000000' });
+        this.text3.anchor.setTo(0.5);
+
         localStorage.totalscore = 0;
     },
     goParaoSinPoloGame:function(){
