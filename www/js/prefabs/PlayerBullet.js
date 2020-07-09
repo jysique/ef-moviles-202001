@@ -1,6 +1,7 @@
 PlayerBullet = function(game,x,y,type){
-    this.changeType();
-    Phaser.Sprite.call(this,game,x,y,this.key);
+    //this.changeType();
+    //Phaser.Sprite.call(this,game,x,y,this.key);
+    Phaser.Sprite.call(this,game,x,y,"bullet_" + type);
     this.anchor.setTo(0.5);
     this.scale.setTo(0.3);
     this.type = type;
@@ -26,7 +27,8 @@ PlayerBullet.prototype.update = function(){
 PlayerBullet.prototype.reset = function(x,y,type){
     this.type = type;
     this.changeType();
+    Phaser.Sprite.prototype.reset.call(this,x,y,"bullet_" + type);
     this.loadTexture(this.key);
-    Phaser.Sprite.prototype.reset.call(this,x,y,this.key);
+
 }
 

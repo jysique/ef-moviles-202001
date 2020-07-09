@@ -1,13 +1,20 @@
 Game = function(){}
 
 Game.prototype = {
-    init:function(wave_current,max_enemies,_score){
+    init:function(wave_current,max_enemies,_score,_life){
         this.PLAYER_SPEED = 300;
         this.BULLET_SPEED = 500;
 
         if(_score == null){
             _score = 0;
         }
+        if(_life == null){
+            this.life = localStorage.lifes;
+        }else{
+            this.life = _life;
+        }
+        
+
         this.score = _score;
         this.total_enemies = 0;
         this.elapsedTime = 0;
@@ -77,7 +84,6 @@ Game.prototype = {
         this.player.animations.add("izq", [0,1,2,3],10,false);
         this.player.animations.add("der", [5,6,7,8],10,false);
 
-        this.life = localStorage.lifes;
     },
     initBullets:function(){
         this.playerBullets = this.game.add.group();
@@ -88,17 +94,20 @@ Game.prototype = {
         let bullet = this.playerBullets.getFirstDead();
         if(!bullet){
           bullet = new PlayerBullet(this.game,this.player.x,this.player.y,_typeBullet);
-        }else{
-          bullet.reset(this.player.x,this.player.y,this.typeBullet);
         }
+        // else{
+          bullet.reset(this.player.x,this.player.y,this.typeBullet);
+        // }
         this.playerBullets.add(bullet);
 
         bullet.body.allowGravity = false;
         if (this.direction_bullet == 1) {
             bullet.body.velocity.y = -this.BULLET_SPEED;
         }else if (this.direction_bullet == -1){
+            bullet.angle = 90;
             if (this.direction_player == 1) {
                 bullet.body.velocity.x = this.BULLET_SPEED;
+                
             }else{
                 bullet.body.velocity.x = -this.BULLET_SPEED;
             }
@@ -208,7 +217,7 @@ Game.prototype = {
         let time_add = this.seconds * this.enemyFrequency;
         this.endOfLevelTimer = this.game.time.events.add(time_wave + time_add,function(){
             this.wave_current++;
-            this.game.state.start("Game",true,false,this.wave_current,this.max_enemies,this.score);
+            this.game.state.start("Game",true,false,this.wave_current,this.max_enemies,this.score,this.life);
         },this);
 
         this.elapsedTime += this.time.elapsed;
